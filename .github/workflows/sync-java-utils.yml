@@ -1,0 +1,54 @@
+name: Synchronize canonical Java utils
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: java-utils-aggregate-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out aggregate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - name: Advance canonical utility pointers
+        shell: bash
+        run: |
+          set -euo pipefail
+          git submodule sync --recursive
+          git submodule update --init --remote --recursive
+
+      - name: Commit aggregate update
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git diff --quiet --submodule=short -- . ':!.github/workflows/sync-java-utils.yml'; then
+            echo "Aggregate already matches all canonical Java utility main branches."
+            exit 0
+          fi
+
+          git config user.name "Tavall Java Utils Sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Changed: Synchronize canonical Java utils" \
+            -m "Reason:
+          - Keep the Tavall Studios utility aggregate aligned with authoritative standalone Java utility repositories.
+
+          Changes:
+          - Advance changed Java utility submodule pointers to their canonical main revisions.
+
+          Validation:
+          - Git submodule update completed successfully for every configured canonical utility."
+          git push origin HEAD:main
