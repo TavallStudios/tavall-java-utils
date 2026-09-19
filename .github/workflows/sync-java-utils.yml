@@ -22,12 +22,13 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Advance canonical utility pointers
+      - name: Advance canonical direct utility pointers
         shell: bash
         run: |
           set -euo pipefail
           git submodule sync --recursive
-          git submodule update --init --remote --recursive
+          git submodule update --init --remote
+          git submodule update --init --recursive
 
       - name: Commit aggregate update
         shell: bash
@@ -35,7 +36,7 @@ jobs:
           set -euo pipefail
 
           if git diff --quiet --submodule=short -- . ':!.github/workflows/sync-java-utils.yml'; then
-            echo "Aggregate already matches all canonical Java utility main branches."
+            echo "Aggregate already matches all canonical direct Java utility main branches."
             exit 0
           fi
 
@@ -44,11 +45,12 @@ jobs:
           git add .
           git commit -m "Changed: Synchronize canonical Java utils" \
             -m "Reason:
-          - Keep the Tavall Studios utility aggregate aligned with authoritative standalone Java utility repositories.
+          - Keep the Tavall Studios utility aggregate aligned with authoritative direct Java utility repositories.
 
           Changes:
-          - Advance changed Java utility submodule pointers to their canonical main revisions.
+          - Advance changed direct Java utility submodule pointers to their canonical main revisions.
+          - Initialize nested descendants at revisions pinned by their owning aggregate.
 
           Validation:
-          - Git submodule update completed successfully for every configured canonical utility."
+          - Git submodule update completed successfully for every configured direct utility."
           git push origin HEAD:main
