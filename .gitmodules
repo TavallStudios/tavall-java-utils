@@ -1,0 +1,4 @@
+[submodule "tavall-custom-enum-java"]
+	path = tavall-custom-enum-java
+	url = https://github.com/TavallStudios/tavall-custom-enum-java.git
+	branch = main
