@@ -1,0 +1,13 @@
+version: 2
+
+source:
+  repository: TavallStudios/tavall-java-utils
+  provider: github
+
+build:
+  type: none
+
+resources:
+  mode: SYSTEM
+
+checks:
