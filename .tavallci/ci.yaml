@@ -14,7 +14,6 @@ dependencies:
   - kind: source
     identity: TavallStudios/tavall-custom-enum-java
     role: SHARED_DEP
-    selector: required-source
-    digest: c7785679970daecda2bbf8c81dc6b45bae8d1e40
+    selector: gitlink
 
 checks:
