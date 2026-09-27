@@ -40,3 +40,8 @@ This repository is itself consumed as a submodule by `TavallStudios/tavall-java-
 | Current PR Stack | No module-specific dependency order is recorded here. See the [open repository pull requests](https://github.com/TavallStudios/tavall-java-utils/pulls). |
 | Development Guide | [CONTRIBUTING.md](CONTRIBUTING.md) and [Synchronization](#synchronization) |
 | Check | Initialize the pinned submodule and use the owning utility repository's check task. |
+
+---
+
+Notion: NOT_APPLICABLE
+Updated: 2026-09-27 02:32 PM PDT · PR: [#3](https://github.com/TavallStudios/tavall-java-utils/pull/3)
