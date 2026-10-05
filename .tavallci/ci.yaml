@@ -1,0 +1,19 @@
+version: 2
+
+source:
+  repository: TavallStudios/tavall-java-utils
+  provider: github
+
+build:
+  type: none
+
+resources:
+  mode: SYSTEM
+
+dependencies:
+  - kind: source
+    identity: TavallStudios/tavall-custom-enum-java
+    role: SHARED_DEP
+    selector: gitlink
+
+checks:
