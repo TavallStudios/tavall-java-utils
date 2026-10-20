@@ -1,33 +1,29 @@
 # Tavall Java Utils
 
-`TavallStudios/tavall-java-utils` is the Tavall Studios aggregate view of standalone low-level Java utility repositories.
+TavallStudios/tavall-java-utils records the canonical source revisions of standalone low-level Java utility repositories.
 
 ## Authority
 
-The individual Tavall Studios utility repositories are the authoritative source trees. Currently tracked:
+The individual Tavall Studios utility repositories own their implementation. This aggregate records those sources as Git submodule pointers. Update a pointer to the exact canonical main revision through an explicit change to this repository. Do not implement utility changes here first or copy source commits into this aggregate.
 
-- `TavallStudios/tavall-custom-enum-java`
+## Source updates
 
-This repository is an automatically synchronized aggregate. Do not implement utility changes here first and do not copy source or commits into this repository. Make changes in the owning standalone repository; this aggregate advances its Git submodule pointer to the resulting canonical `main` revision.
+Each utility is tracked as a Git submodule at its canonical Tavall Studios repository. Pointer updates are made explicitly through this repository's pull request workflow; there is no scheduled or manual GitHub Actions synchronization job. The source-owned .tavallci/ci.yaml declares this aggregate as a no-build source checkout. Local validation checks the CI definition and verifies each pointer against its canonical repository main. Implementation checks remain owned by the utility source repository.
 
-## Synchronization
-
-Each utility is tracked as a Git submodule pointing at its canonical Tavall Studios repository. `.github/workflows/sync-java-utils.yml` periodically advances configured utility pointers to their latest canonical `main` revisions and commits the aggregate pointer update when anything changed. The workflow may also be run manually.
-
-This repository is itself consumed as a submodule by `TavallStudios/tavall-java-tools`, allowing the Java tools aggregate to include the utility aggregate without copying or taking ownership of its source.
+This repository is consumed as a submodule by TavallStudios/tavall-java-tools. The aggregate does not copy or take ownership of utility source.
 
 ## Module and runtime boundary
 
-**Responsibility:** This repository owns the aggregate pointer and synchronization workflow for standalone low-level Java utilities.
+**Responsibility:** This repository owns aggregate source pointers and its source-owned Tavall CI definition.
 
 **Does not own:** Utility source code, utility release policy, or runtime deployment.
 
-- `tavall-java-utils/` — **← This Module**
-  - `tavall-custom-enum-java/`
+- tavall-java-utils/ — this module
+  - tavall-custom-enum-java/
 
-**Relationships:** [`tavall-custom-enum-java`](https://github.com/TavallStudios/tavall-custom-enum-java) owns the utility implementation and release. [`tavall-java-tools`](https://github.com/TavallStudios/tavall-java-tools) consumes this aggregate as a nested submodule.
+**Relationships:** tavall-custom-enum-java owns the utility implementation and release. tavall-java-tools consumes this aggregate as a nested submodule.
 
-**Governing documentation:** [Authority](#authority), [Synchronization](#synchronization), [CONTRIBUTING.md](CONTRIBUTING.md), [submodule declaration](.gitmodules), and [sync workflow](.github/workflows/sync-java-utils.yml).
+**Governing documentation:** CONTRIBUTING.md, .gitmodules, and .tavallci/ci.yaml.
 
 **Runtime owner:** None. The aggregate is a recursive source checkout, not an executable.
 
@@ -37,11 +33,11 @@ This repository is itself consumed as a submodule by `TavallStudios/tavall-java-
 | --- | --- |
 | Module Type | Git-submodule aggregate |
 | Runtime | None |
-| Current PR Stack | No module-specific dependency order is recorded here. See the [open repository pull requests](https://github.com/TavallStudios/tavall-java-utils/pulls). |
-| Development Guide | [CONTRIBUTING.md](CONTRIBUTING.md) and [Synchronization](#synchronization) |
-| Check | Initialize the pinned submodule and use the owning utility repository's check task. |
+| Current PR Stack | See the [open repository pull requests](https://github.com/TavallStudios/tavall-java-utils/pulls). |
+| Development Guide | CONTRIBUTING.md and Source updates above |
+| Check | Parse the source-owned CI definition, compare each gitlink with its canonical repository main SHA, and use the owning utility repository's checks for source changes. There is no aggregate build. |
 
 ---
 
 Notion: NOT_APPLICABLE
-Updated: 2026-09-27 02:32 PM PDT · PR: [#3](https://github.com/TavallStudios/tavall-java-utils/pull/3)
+Updated: 2026-10-20 UTC · PR: [#2](https://github.com/TavallStudios/tavall-java-utils/pull/2)
